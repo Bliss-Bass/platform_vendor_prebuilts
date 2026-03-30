@@ -37,14 +37,3 @@ LOCAL_OPTIONAL_USES_LIBRARIES := \
 androidx.window.extensions \
 androidx.window.sidecar
 include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := Jellyfish
-LOCAL_MODULE_CLASS := APPS
-LOCAL_MODULE_TAGS := optional
-LOCAL_CERTIFICATE := platform
-LOCAL_SRC_FILES := $(LOCAL_MODULE)/$(LOCAL_MODULE).apk
-LOCAL_PRODUCT_MODULE := true
-LOCAL_OVERRIDES_PACKAGES := Browser2 QuickSearchBox
-LOCAL_OPTIONAL_USES_LIBRARIES := androidx.window.extensions androidx.window.sidecar
-include $(BUILD_PREBUILT)
