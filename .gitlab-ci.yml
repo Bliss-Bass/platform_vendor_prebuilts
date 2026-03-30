@@ -1,0 +1,24 @@
+image: debian:latest
+
+stages:
+  - UpdateAPKs
+
+.before_script_install:
+  before_script:
+    - apt update && apt install -y default-jdk aapt git wget unzip tar lib32stdc++6 lib32z1 zip jq zipalign python3-pip python3-venv
+    - python3 -m venv myenv
+    - source myenv/bin/activate
+    - python3 -m pip install pipenv
+    - pip install --upgrade pip
+    - pip install requests-cache==0.9.1
+    - cd updater && pipenv install && cd -
+    - git config --global user.email "${GITLAB_USER_EMAIL}"
+    - git config --global user.name "${GITLAB_USER_NAME}"
+    - git remote set-url origin https://${GITLAB_USER_NAME}:${CI_PROJECT_TOKEN}@${CI_REPOSITORY_URL#*@}
+    - git checkout ${CI_COMMIT_REF_NAME}
+
+build:
+  extends: .before_script_install
+  stage: UpdateAPKs
+  script:
+    - python3 updater/main.py
